@@ -8,9 +8,10 @@ import {
 
 export const countriesBySubregion = async (req: express.Request, res: express.Response) => {
   try {
-    const regionDB = getRegionDB();
     const {subregionId} = req.params;
-    const countriesCollection = (await regionDB).collection("countries");
+    
+    const regionDB = await getRegionDB();
+    const countriesCollection = regionDB.collection("countries");
     const countriesList = await countriesCollection.find({ subregion_id: subregionId }).toArray();
 
     responseHelper(res, status.success, message.onlySuccess, countriesList);

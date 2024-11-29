@@ -8,9 +8,10 @@ import {
 
 export const citiesByCountryStateCode = async (req: express.Request, res: express.Response) => {
   try {
-    const regionDB = getRegionDB();
     const {iso2CountryCode, stateCode} = req.params;
-    const citiesCollection = (await regionDB).collection("cities");
+    
+    const regionDB = await getRegionDB();
+    const citiesCollection = regionDB.collection("cities");
     const citiesList = await citiesCollection.find({ country_code: iso2CountryCode, state_code: stateCode }).toArray();
 
     responseHelper(res, status.success, message.onlySuccess, citiesList);
