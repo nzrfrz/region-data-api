@@ -13,9 +13,9 @@ exports.statesByCountryCode = void 0;
 const _utils_1 = require("../../_utils");
 const statesByCountryCode = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const regionDB = (0, _utils_1.getRegionDB)();
         const { iso2CountryCode } = req.params;
-        const statesCollection = (yield regionDB).collection("states");
+        const regionDB = yield (0, _utils_1.getRegionDB)();
+        const statesCollection = regionDB.collection("states");
         const statesList = yield statesCollection.find({ country_code: iso2CountryCode }).toArray();
         (0, _utils_1.responseHelper)(res, _utils_1.status.success, _utils_1.message.onlySuccess, statesList);
     }

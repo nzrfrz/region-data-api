@@ -13,9 +13,9 @@ exports.countriesBySubregion = void 0;
 const _utils_1 = require("../../_utils");
 const countriesBySubregion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const regionDB = (0, _utils_1.getRegionDB)();
         const { subregionId } = req.params;
-        const countriesCollection = (yield regionDB).collection("countries");
+        const regionDB = yield (0, _utils_1.getRegionDB)();
+        const countriesCollection = regionDB.collection("countries");
         const countriesList = yield countriesCollection.find({ subregion_id: subregionId }).toArray();
         (0, _utils_1.responseHelper)(res, _utils_1.status.success, _utils_1.message.onlySuccess, countriesList);
     }
